@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Silly Love - Choose Your Gateway</title>
+  <meta name="description" content="Choose the best gateway to access Silly Love based on your location">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💕</text></svg>">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .container {
+      background: white;
+      border-radius: 24px;
+      padding: 48px 40px;
+      max-width: 600px;
+      width: 100%;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      animation: fadeIn 0.5s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .logo {
+      font-size: 64px;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      font-size: 28px;
+      color: #1a1a1a;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    .subtitle {
+      color: #666;
+      font-size: 16px;
+    }
+
+    .lang-switcher {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+    }
+
+    .lang-btn {
+      padding: 8px 16px;
+      border: 2px solid #e0e0e0;
+      border-radius: 20px;
+      background: white;
+      cursor: pointer;
+      font-size: 14px;
+      transition: all 0.3s;
+      color: #666;
+    }
+
+    .lang-btn:hover {
+      border-color: #667eea;
+      color: #667eea;
+    }
+
+    .lang-btn.active {
+      border-color: #667eea;
+      background: #667eea;
+      color: white;
+    }
+
+    .option {
+      border: 3px solid #e0e0e0;
+      border-radius: 16px;
+      padding: 24px;
+      margin: 20px 0;
+      cursor: pointer;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .option::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .option:hover {
+      border-color: #667eea;
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(102, 126, 234, 0.2);
+    }
+
+    .option:hover::before {
+      opacity: 1;
+    }
+
+    .option.recommended {
+      border-color: #667eea;
+      background: linear-gradient(135deg, rgba(102, 126, 234, 0.08) 0%, rgba(118, 75, 162, 0.08) 100%);
+    }
+
+    .option-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .option-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .option-title h3 {
+      font-size: 20px;
+      color: #1a1a1a;
+      font-weight: 600;
+    }
+
+    .badge {
+      background: #667eea;
+      color: white;
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .option-url {
+      color: #667eea;
+      font-size: 16px;
+      font-weight: 500;
+      margin-bottom: 12px;
+      word-break: break-all;
+      position: relative;
+      z-index: 1;
+    }
+
+    .option-features {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      position: relative;
+      z-index: 1;
+    }
+
+    .feature {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: #666;
+      font-size: 14px;
+    }
+
+    .feature::before {
+      content: '✓';
+      color: #667eea;
+      font-weight: bold;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 32px;
+      padding-top: 24px;
+      border-top: 1px solid #e0e0e0;
+    }
+
+    .footer-text {
+      color: #999;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .auto-redirect {
+      background: #f8f9fa;
+      border-radius: 12px;
+      padding: 16px;
+      margin-top: 24px;
+      text-align: center;
+    }
+
+    .auto-redirect-text {
+      color: #666;
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+
+    .countdown {
+      font-size: 24px;
+      font-weight: 600;
+      color: #667eea;
+    }
+
+    .cancel-btn {
+      margin-top: 12px;
+      padding: 8px 16px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      background: white;
+      cursor: pointer;
+      font-size: 14px;
+      color: #666;
+      transition: all 0.3s;
+    }
+
+    .cancel-btn:hover {
+      border-color: #667eea;
+      color: #667eea;
+    }
+
+    @media (max-width: 640px) {
+      .container {
+        padding: 32px 24px;
+      }
+
+      h1 {
+        font-size: 24px;
+      }
+
+      .logo {
+        font-size: 48px;
+      }
+
+      .option {
+        padding: 20px;
+      }
+
+      .option-title h3 {
+        font-size: 18px;
+      }
+
+      .option-url {
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="logo">💕</div>
+      <h1 id="title">选择访问入口</h1>
+      <p class="subtitle" id="subtitle">根据您的位置选择最佳访问方式</p>
+    </div>
+
+    <div class="lang-switcher">
+      <button class="lang-btn active" onclick="setLang('zh')">简体中文</button>
+      <button class="lang-btn" onclick="setLang('en')">English</button>
+      <button class="lang-btn" onclick="setLang('ja')">日本語</button>
+      <button class="lang-btn" onclick="setLang('ko')">한국어</button>
+    </div>
+
+    <div class="option recommended" onclick="goto('cn')">
+      <div class="option-header">
+        <div class="option-title">
+          <h3 id="cn-title">🇨🇳 国内用户</h3>
+        </div>
+        <span class="badge" id="recommended-badge">推荐</span>
+      </div>
+      <div class="option-url">sillylove.indevs.in</div>
+      <div class="option-features">
+        <span class="feature" id="cn-feature-1">国内 CDN 加速</span>
+        <span class="feature" id="cn-feature-2">访问速度快</span>
+        <span class="feature" id="cn-feature-3">稳定可靠</span>
+      </div>
+    </div>
+
+    <div class="option" onclick="goto('global')">
+      <div class="option-header">
+        <div class="option-title">
+          <h3 id="global-title">🌍 海外用户</h3>
+        </div>
+      </div>
+      <div class="option-url">sillylove.vercel.app</div>
+      <div class="option-features">
+        <span class="feature" id="global-feature-1">全球 CDN 加速</span>
+        <span class="feature" id="global-feature-2">Vercel 托管</span>
+        <span class="feature" id="global-feature-3">高可用性</span>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div class="footer-text">
+        <span>💡</span>
+        <span id="footer-text">系统已根据您的位置自动推荐最佳入口</span>
+      </div>
+    </div>
+
+    <div class="auto-redirect" id="auto-redirect" style="display: none;">
+      <div class="auto-redirect-text" id="redirect-text">将在 <span class="countdown" id="countdown">5</span> 秒后自动跳转</div>
+      <button class="cancel-btn" onclick="cancelRedirect()" id="cancel-btn">取消自动跳转</button>
+    </div>
+  </div>
+
+  <script>
+    const translations = {
+      zh: {
+        title: '选择访问入口',
+        subtitle: '根据您的位置选择最佳访问方式',
+        recommendedBadge: '推荐',
+        cnTitle: '🇨🇳 国内用户',
+        cnFeature1: '国内 CDN 加速',
+        cnFeature2: '访问速度快',
+        cnFeature3: '稳定可靠',
+        globalTitle: '🌍 海外用户',
+        globalFeature1: '全球 CDN 加速',
+        globalFeature2: 'Vercel 托管',
+        globalFeature3: '高可用性',
+        footerText: '系统已根据您的位置自动推荐最佳入口',
+        redirectText: '将在 {seconds} 秒后自动跳转',
+        cancelBtn: '取消自动跳转'
+      },
+      en: {
+        title: 'Choose Your Gateway',
+        subtitle: 'Select the best access method based on your location',
+        recommendedBadge: 'Recommended',
+        cnTitle: '🇨🇳 China Users',
+        cnFeature1: 'China CDN Acceleration',
+        cnFeature2: 'Fast Access',
+        cnFeature3: 'Stable & Reliable',
+        globalTitle: '🌍 Global Users',
+        globalFeature1: 'Global CDN Acceleration',
+        globalFeature2: 'Vercel Hosting',
+        globalFeature3: 'High Availability',
+        footerText: 'System has automatically recommended the best gateway for you',
+        redirectText: 'Redirecting in {seconds} seconds',
+        cancelBtn: 'Cancel Auto Redirect'
+      },
+      ja: {
+        title: 'アクセス方法を選択',
+        subtitle: 'お住まいの地域に最適なアクセス方法を選択してください',
+        recommendedBadge: 'おすすめ',
+        cnTitle: '🇨🇳 中国ユーザー',
+        cnFeature1: '中国 CDN 高速化',
+        cnFeature2: '高速アクセス',
+        cnFeature3: '安定性',
+        globalTitle: '🌍 グローバルユーザー',
+        globalFeature1: 'グローバル CDN 高速化',
+        globalFeature2: 'Vercel ホスティング',
+        globalFeature3: '高可用性',
+        footerText: 'システムが自動的に最適なゲートウェイを推奨しました',
+        redirectText: '{seconds} 秒後に自動的にリダイレクトします',
+        cancelBtn: '自動リダイレクトをキャンセル'
+      },
+      ko: {
+        title: '접속 방법 선택',
+        subtitle: '위치에 따라 최적의 접속 방법을 선택하세요',
+        recommendedBadge: '추천',
+        cnTitle: '🇨🇳 중국 사용자',
+        cnFeature1: '중국 CDN 가속',
+        cnFeature2: '빠른 접속',
+        cnFeature3: '안정적',
+        globalTitle: '🌍 글로벌 사용자',
+        globalFeature1: '글로벌 CDN 가속',
+        globalFeature2: 'Vercel 호스팅',
+        globalFeature3: '높은 가용성',
+        footerText: '시스템이 자동으로 최적의 게이트웨이를 추천했습니다',
+        redirectText: '{seconds}초 후 자동으로 리디렉션됩니다',
+        cancelBtn: '자동 리디렉션 취소'
+      }
+    };
+
+    let currentLang = 'zh';
+    let redirectTimer = null;
+    let countdown = 5;
+
+    function setLang(lang) {
+      currentLang = lang;
+      
+      // Update active button
+      document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      event.target.classList.add('active');
+
+      // Update text
+      const t = translations[lang];
+      document.getElementById('title').textContent = t.title;
+      document.getElementById('subtitle').textContent = t.subtitle;
+      document.getElementById('recommended-badge').textContent = t.recommendedBadge;
+      document.getElementById('cn-title').textContent = t.cnTitle;
+      document.getElementById('cn-feature-1').textContent = t.cnFeature1;
+      document.getElementById('cn-feature-2').textContent = t.cnFeature2;
+      document.getElementById('cn-feature-3').textContent = t.cnFeature3;
+      document.getElementById('global-title').textContent = t.globalTitle;
+      document.getElementById('global-feature-1').textContent = t.globalFeature1;
+      document.getElementById('global-feature-2').textContent = t.globalFeature2;
+      document.getElementById('global-feature-3').textContent = t.globalFeature3;
+      document.getElementById('footer-text').textContent = t.footerText;
+      document.getElementById('cancel-btn').textContent = t.cancelBtn;
+      
+      updateRedirectText();
+
+      // Save preference
+      localStorage.setItem('preferredLang', lang);
+    }
+
+    function updateRedirectText() {
+      const t = translations[currentLang];
+      const text = t.redirectText.replace('{seconds}', `<span class="countdown" id="countdown">${countdown}</span>`);
+      document.getElementById('redirect-text').innerHTML = text;
+    }
+
+    function goto(type) {
+      if (type === 'cn') {
+        window.location.href = 'https://sillylove.indevs.in';
+      } else {
+        window.location.href = 'https://sillylove.vercel.app';
+      }
+    }
+
+    function startAutoRedirect() {
+      // Show auto redirect section
+      document.getElementById('auto-redirect').style.display = 'block';
+      
+      redirectTimer = setInterval(() => {
+        countdown--;
+        document.getElementById('countdown').textContent = countdown;
+        
+        if (countdown <= 0) {
+          clearInterval(redirectTimer);
+          goto('cn'); // Default to CN gateway
+        }
+      }, 1000);
+    }
+
+    function cancelRedirect() {
+      if (redirectTimer) {
+        clearInterval(redirectTimer);
+        redirectTimer = null;
+      }
+      document.getElementById('auto-redirect').style.display = 'none';
+      countdown = 5;
+    }
+
+    // Initialize
+    window.addEventListener('DOMContentLoaded', () => {
+      // Detect browser language
+      const browserLang = navigator.language.toLowerCase();
+      let detectedLang = 'en';
+      
+      if (browserLang.startsWith('zh')) {
+        detectedLang = 'zh';
+      } else if (browserLang.startsWith('ja')) {
+        detectedLang = 'ja';
+      } else if (browserLang.startsWith('ko')) {
+        detectedLang = 'ko';
+      }
+
+      // Use saved preference or detected language
+      const savedLang = localStorage.getItem('preferredLang');
+      const lang = savedLang || detectedLang;
+      
+      // Set language without triggering event
+      currentLang = lang;
+      document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.textContent.includes(lang === 'zh' ? '简体中文' : lang === 'en' ? 'English' : lang === 'ja' ? '日本語' : '한국어')) {
+          btn.classList.add('active');
+        }
+      });
+      
+      const t = translations[lang];
+      document.getElementById('title').textContent = t.title;
+      document.getElementById('subtitle').textContent = t.subtitle;
+      document.getElementById('recommended-badge').textContent = t.recommendedBadge;
+      document.getElementById('cn-title').textContent = t.cnTitle;
+      document.getElementById('cn-feature-1').textContent = t.cnFeature1;
+      document.getElementById('cn-feature-2').textContent = t.cnFeature2;
+      document.getElementById('cn-feature-3').textContent = t.cnFeature3;
+      document.getElementById('global-title').textContent = t.globalTitle;
+      document.getElementById('global-feature-1').textContent = t.globalFeature1;
+      document.getElementById('global-feature-2').textContent = t.globalFeature2;
+      document.getElementById('global-feature-3').textContent = t.globalFeature3;
+      document.getElementById('footer-text').textContent = t.footerText;
+      document.getElementById('cancel-btn').textContent = t.cancelBtn;
+
+      // Optional: Enable auto redirect (commented out by default)
+      // startAutoRedirect();
+    });
+  </script>
+</body>
+</html>

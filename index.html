@@ -669,7 +669,11 @@
       document.getElementById('title').innerHTML = t.title;
       document.getElementById('subtitle').textContent = t.subtitle;
       document.getElementById('tagline').textContent = t.tagline;
-      document.getElementById('recommended-badge').textContent = t.recommendedBadge;
+      // Update both badge texts (they may or may not be visible)
+      const cnBadge = document.getElementById('cn-badge');
+      const globalBadge = document.getElementById('global-badge');
+      if (cnBadge) cnBadge.textContent = t.recommendedBadge;
+      if (globalBadge) globalBadge.textContent = t.recommendedBadge;
       document.getElementById('cn-title').textContent = t.cnTitle;
       document.getElementById('cn-feature-1').textContent = t.cnFeature1;
       document.getElementById('cn-feature-2').textContent = t.cnFeature2;
@@ -824,7 +828,11 @@
       document.getElementById('title').innerHTML = t.title;
       document.getElementById('subtitle').textContent = t.subtitle;
       document.getElementById('tagline').textContent = t.tagline;
-      document.getElementById('recommended-badge').textContent = t.recommendedBadge;
+      // Update both badge texts (they may or may not be visible)
+      const cnBadge = document.getElementById('cn-badge');
+      const globalBadge = document.getElementById('global-badge');
+      if (cnBadge) cnBadge.textContent = t.recommendedBadge;
+      if (globalBadge) globalBadge.textContent = t.recommendedBadge;
       document.getElementById('cn-title').textContent = t.cnTitle;
       document.getElementById('cn-feature-1').textContent = t.cnFeature1;
       document.getElementById('cn-feature-2').textContent = t.cnFeature2;

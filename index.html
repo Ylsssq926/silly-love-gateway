@@ -448,12 +448,12 @@
       <button class="lang-btn" onclick="setLang('ko')">한국어</button>
     </div>
 
-    <div class="option recommended" onclick="goto('cn')">
+    <div class="option" id="cn-option" onclick="goto('cn')">
       <div class="option-header">
         <div class="option-title">
           <h3 id="cn-title">🇨🇳 国内用户</h3>
         </div>
-        <span class="badge" id="recommended-badge">推荐</span>
+        <span class="badge" id="cn-badge" style="display: none;">推荐</span>
       </div>
       <div class="option-url">sillylove.indevs.in</div>
       <div class="option-features">
@@ -463,11 +463,12 @@
       </div>
     </div>
 
-    <div class="option" onclick="goto('global')">
+    <div class="option" id="global-option" onclick="goto('global')">
       <div class="option-header">
         <div class="option-title">
           <h3 id="global-title">🌍 海外用户</h3>
         </div>
+        <span class="badge" id="global-badge" style="display: none;">推荐</span>
       </div>
       <div class="option-url">sillylove.vercel.app</div>
       <div class="option-features">
@@ -651,6 +652,90 @@
       }
     }
 
+    // 检测用户地理位置并推荐最佳入口
+    async function detectAndRecommend() {
+      try {
+        // 尝试从多个来源获取地理位置信息
+        let country = null;
+        
+        // 方法1: 使用 Cloudflare 的地理位置 API
+        try {
+          const cfResponse = await fetch('https://www.cloudflare.com/cdn-cgi/trace');
+          const cfText = await cfResponse.text();
+          const locMatch = cfText.match(/loc=([A-Z]{2})/);
+          if (locMatch) {
+            country = locMatch[1];
+            console.log('[Gateway] Detected country from Cloudflare:', country);
+          }
+        } catch (e) {
+          console.warn('[Gateway] Cloudflare detection failed:', e);
+        }
+        
+        // 方法2: 使用浏览器语言作为备选
+        if (!country) {
+          const lang = navigator.language.toLowerCase();
+          if (lang.startsWith('zh-cn') || lang === 'zh') {
+            country = 'CN';
+            console.log('[Gateway] Detected country from browser language:', country);
+          }
+        }
+        
+        // 方法3: 使用时区作为备选
+        if (!country) {
+          const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+          if (timezone.includes('Shanghai') || timezone.includes('Chongqing') || 
+              timezone.includes('Hong_Kong') || timezone.includes('Taipei')) {
+            country = 'CN';
+            console.log('[Gateway] Detected country from timezone:', country);
+          }
+        }
+        
+        // 中国大陆及周边地区
+        const chinaRegions = ['CN', 'HK', 'MO', 'TW'];
+        
+        if (country && chinaRegions.includes(country)) {
+          // 推荐国内入口
+          const cnOption = document.getElementById('cn-option');
+          const cnBadge = document.getElementById('cn-badge');
+          const globalOption = document.getElementById('global-option');
+          
+          if (cnOption && cnBadge) {
+            cnOption.classList.add('recommended');
+            cnBadge.style.display = 'inline-block';
+          }
+          if (globalOption) {
+            globalOption.classList.remove('recommended');
+          }
+          
+          console.log('[Gateway] Recommending CN gateway for', country);
+        } else {
+          // 推荐海外入口
+          const cnOption = document.getElementById('cn-option');
+          const globalOption = document.getElementById('global-option');
+          const globalBadge = document.getElementById('global-badge');
+          
+          if (globalOption && globalBadge) {
+            globalOption.classList.add('recommended');
+            globalBadge.style.display = 'inline-block';
+          }
+          if (cnOption) {
+            cnOption.classList.remove('recommended');
+          }
+          
+          console.log('[Gateway] Recommending Global gateway for', country || 'unknown');
+        }
+      } catch (error) {
+        console.error('[Gateway] Detection failed:', error);
+        // 默认推荐国内入口（因为主要用户在国内）
+        const cnOption = document.getElementById('cn-option');
+        const cnBadge = document.getElementById('cn-badge');
+        if (cnOption && cnBadge) {
+          cnOption.classList.add('recommended');
+          cnBadge.style.display = 'inline-block';
+        }
+      }
+    }
+
     // Initialize
     window.addEventListener('DOMContentLoaded', () => {
       // 初始化角色轮播
@@ -658,6 +743,9 @@
       
       // 初始化背景粒子
       initParticles();
+      
+      // 检测地理位置并推荐最佳入口
+      detectAndRecommend();
       
       // Detect browser language
       const browserLang = navigator.language.toLowerCase();

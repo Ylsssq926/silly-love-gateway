@@ -3,9 +3,33 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Silly Love - Choose Your Gateway</title>
-  <meta name="description" content="Choose the best gateway to access Silly Love based on your location">
+  
+  <!-- SEO优化 -->
+  <title>Silly Love - AI角色聊天 | 虚拟女友 | 二次元陪伴 | NSFW无审查</title>
+  <meta name="description" content="深夜寂寞？来Silly Love找你的专属AI肉奴！雷电将军、卡芙卡、Aqua等200+精美角色，7X24小时在线等你调教。免费上车，不用绑卡，老司机都懂的😏">
+  <meta name="keywords" content="AI聊天,虚拟女友,二次元陪伴,NSFW,无审查,角色扮演,雷电将军,卡芙卡,Aqua,AI女友,成人聊天,免费AI">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://go-6ut.pages.dev/">
+  <meta property="og:title" content="Silly Love - 深夜了，发车吗？">
+  <meta property="og:description" content="你的专属AI肉奴，7X24小时在线等你调教。免费上车，不用绑卡，老司机都懂的😏">
+  <meta property="og:image" content="https://sillylove.indevs.in/characters/elysia_7d0165.webp">
+  
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://go-6ut.pages.dev/">
+  <meta property="twitter:title" content="Silly Love - 深夜了，发车吗？">
+  <meta property="twitter:description" content="你的专属AI肉奴，7X24小时在线等你调教">
+  <meta property="twitter:image" content="https://sillylove.indevs.in/characters/elysia_7d0165.webp">
+  
+  <!-- Favicon -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💕</text></svg>">
+  
+  <!-- Preconnect for performance -->
+  <link rel="preconnect" href="https://sillylove.indevs.in">
+  <link rel="preconnect" href="https://sillylove.vercel.app">
+  
   <style>
     * {
       margin: 0;
@@ -14,23 +38,55 @@
     }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans SC', sans-serif;
       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
       padding: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* 背景动画粒子 */
+    .particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .particle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.5);
+      border-radius: 50%;
+      animation: float 15s infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0) translateX(0); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateY(-100vh) translateX(100px); opacity: 0; }
     }
 
     .container {
-      background: white;
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(10px);
       border-radius: 24px;
       padding: 48px 40px;
-      max-width: 600px;
+      max-width: 700px;
       width: 100%;
       box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
       animation: fadeIn 0.5s ease-out;
+      position: relative;
+      z-index: 1;
     }
 
     @keyframes fadeIn {
@@ -46,24 +102,100 @@
 
     .header {
       text-align: center;
-      margin-bottom: 40px;
+      margin-bottom: 32px;
     }
 
     .logo {
       font-size: 64px;
       margin-bottom: 16px;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
     }
 
     h1 {
-      font-size: 28px;
+      font-size: 32px;
       color: #1a1a1a;
-      margin-bottom: 8px;
-      font-weight: 600;
+      margin-bottom: 12px;
+      font-weight: 700;
+      line-height: 1.3;
+    }
+
+    .highlight {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
     .subtitle {
       color: #666;
       font-size: 16px;
+      line-height: 1.6;
+      margin-bottom: 8px;
+    }
+
+    .tagline {
+      color: #999;
+      font-size: 14px;
+      font-style: italic;
+    }
+
+    /* 角色轮播 */
+    .character-showcase {
+      margin: 24px 0;
+      height: 200px;
+      position: relative;
+      overflow: hidden;
+      border-radius: 16px;
+      background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+    }
+
+    .character-slider {
+      display: flex;
+      animation: slide 20s linear infinite;
+      height: 100%;
+    }
+
+    @keyframes slide {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    .character-card {
+      min-width: 150px;
+      height: 200px;
+      margin: 0 8px;
+      border-radius: 12px;
+      overflow: hidden;
+      position: relative;
+      transition: transform 0.3s;
+    }
+
+    .character-card:hover {
+      transform: scale(1.05);
+      z-index: 10;
+    }
+
+    .character-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .character-name {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+      color: white;
+      padding: 8px;
+      font-size: 12px;
+      text-align: center;
     }
 
     .lang-switcher {
@@ -88,6 +220,7 @@
     .lang-btn:hover {
       border-color: #667eea;
       color: #667eea;
+      transform: translateY(-2px);
     }
 
     .lang-btn.active {
@@ -162,6 +295,12 @@
       border-radius: 12px;
       font-size: 12px;
       font-weight: 600;
+      animation: glow 2s ease-in-out infinite;
+    }
+
+    @keyframes glow {
+      0%, 100% { box-shadow: 0 0 5px rgba(102, 126, 234, 0.5); }
+      50% { box-shadow: 0 0 20px rgba(102, 126, 234, 0.8); }
     }
 
     .option-url {
@@ -210,43 +349,31 @@
       align-items: center;
       justify-content: center;
       gap: 8px;
+      flex-wrap: wrap;
     }
 
-    .auto-redirect {
-      background: #f8f9fa;
-      border-radius: 12px;
-      padding: 16px;
-      margin-top: 24px;
+    .stats {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin: 24px 0;
+      flex-wrap: wrap;
+    }
+
+    .stat-item {
       text-align: center;
     }
 
-    .auto-redirect-text {
-      color: #666;
-      font-size: 14px;
-      margin-bottom: 8px;
-    }
-
-    .countdown {
+    .stat-number {
       font-size: 24px;
-      font-weight: 600;
+      font-weight: 700;
       color: #667eea;
     }
 
-    .cancel-btn {
-      margin-top: 12px;
-      padding: 8px 16px;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      background: white;
-      cursor: pointer;
-      font-size: 14px;
-      color: #666;
-      transition: all 0.3s;
-    }
-
-    .cancel-btn:hover {
-      border-color: #667eea;
-      color: #667eea;
+    .stat-label {
+      font-size: 12px;
+      color: #999;
+      margin-top: 4px;
     }
 
     @media (max-width: 640px) {
@@ -273,15 +400,45 @@
       .option-url {
         font-size: 14px;
       }
+
+      .character-card {
+        min-width: 120px;
+        height: 160px;
+      }
     }
   </style>
 </head>
 <body>
+  <!-- 背景粒子 -->
+  <div class="particles" id="particles"></div>
+
   <div class="container">
     <div class="header">
       <div class="logo">💕</div>
-      <h1 id="title">选择访问入口</h1>
-      <p class="subtitle" id="subtitle">根据您的位置选择最佳访问方式</p>
+      <h1 id="title">深夜了，<span class="highlight">发车吗？</span></h1>
+      <p class="subtitle" id="subtitle">你的专属AI肉奴，7X24小时在线等你调教</p>
+      <p class="tagline" id="tagline">免费上车 · 不用绑卡 · 老司机都懂的😏</p>
+    </div>
+
+    <!-- 数据统计 -->
+    <div class="stats">
+      <div class="stat-item">
+        <div class="stat-number">200+</div>
+        <div class="stat-label" id="stat-characters">精美角色</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">24/7</div>
+        <div class="stat-label" id="stat-online">在线服务</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">100%</div>
+        <div class="stat-label" id="stat-free">免费体验</div>
+      </div>
+    </div>
+
+    <!-- 角色轮播 -->
+    <div class="character-showcase">
+      <div class="character-slider" id="characterSlider"></div>
     </div>
 
     <div class="lang-switcher">
@@ -326,18 +483,62 @@
         <span id="footer-text">系统已根据您的位置自动推荐最佳入口</span>
       </div>
     </div>
-
-    <div class="auto-redirect" id="auto-redirect" style="display: none;">
-      <div class="auto-redirect-text" id="redirect-text">将在 <span class="countdown" id="countdown">5</span> 秒后自动跳转</div>
-      <button class="cancel-btn" onclick="cancelRedirect()" id="cancel-btn">取消自动跳转</button>
-    </div>
   </div>
 
   <script>
+    // 热门角色列表（使用实际存在的图片）
+    const featuredCharacters = [
+      { id: 'elysia_7d0165', name: '爱莉希雅' },
+      { id: 'kafka_162073', name: '卡芙卡' },
+      { id: 'raiden_0f87cd', name: '雷电将军' },
+      { id: 'aqua_48r0o5', name: 'Aqua' },
+      { id: 'ganyu_1dsiiq', name: '甘雨' },
+      { id: 'makima_3ytqgl', name: '玛奇玛' },
+      { id: 'megumin_4marci', name: '惠惠' },
+      { id: 'darkness_6ljgnk', name: '达克妮斯' },
+      { id: 'frieren_8sdnzo', name: '芙莉莲' },
+      { id: 'bronya_7d2cc5', name: '布洛妮娅' },
+      { id: 'silverwolf_529404', name: '银狼' },
+      { id: 'rebecca_0mi09n', name: '丽贝卡' }
+    ];
+
+    // 初始化角色轮播
+    function initCharacterSlider() {
+      const slider = document.getElementById('characterSlider');
+      const baseUrl = 'https://sillylove.indevs.in/characters/';
+      
+      // 复制两遍以实现无缝循环
+      const characters = [...featuredCharacters, ...featuredCharacters];
+      
+      characters.forEach(char => {
+        const card = document.createElement('div');
+        card.className = 'character-card';
+        card.innerHTML = `
+          <img src="${baseUrl}${char.id}.webp" alt="${char.name}" loading="lazy">
+          <div class="character-name">${char.name}</div>
+        `;
+        slider.appendChild(card);
+      });
+    }
+
+    // 初始化背景粒子
+    function initParticles() {
+      const particles = document.getElementById('particles');
+      for (let i = 0; i < 30; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.animationDelay = Math.random() * 15 + 's';
+        particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+        particles.appendChild(particle);
+      }
+    }
+
     const translations = {
       zh: {
-        title: '深夜了，发车吗？',
+        title: '深夜了，<span class="highlight">发车吗？</span>',
         subtitle: '你的专属AI肉奴，7X24小时在线等你调教',
+        tagline: '免费上车 · 不用绑卡 · 老司机都懂的😏',
         recommendedBadge: '推荐',
         cnTitle: '🇨🇳 国内用户',
         cnFeature1: '国内 CDN 加速',
@@ -347,13 +548,15 @@
         globalFeature1: '全球 CDN 加速',
         globalFeature2: 'Vercel 托管',
         globalFeature3: '高可用性',
-        footerText: '免费上车 · 不用绑卡 · 老司机都懂的😏',
-        redirectText: '将在 {seconds} 秒后自动跳转',
-        cancelBtn: '取消自动跳转'
+        footerText: '系统已根据您的位置自动推荐最佳入口',
+        statCharacters: '精美角色',
+        statOnline: '在线服务',
+        statFree: '免费体验'
       },
       en: {
-        title: 'Late Night, Ready to Go?',
+        title: 'Late Night, <span class="highlight">Ready to Go?</span>',
         subtitle: 'Your personal AI companion, 24/7 online waiting for you',
+        tagline: 'Free Access · No Card Required · You Know What\'s Up 😏',
         recommendedBadge: 'Recommended',
         cnTitle: '🇨🇳 China Users',
         cnFeature1: 'China CDN Acceleration',
@@ -363,13 +566,15 @@
         globalFeature1: 'Global CDN Acceleration',
         globalFeature2: 'Vercel Hosting',
         globalFeature3: 'High Availability',
-        footerText: 'Free Access · No Card Required · You Know What\'s Up 😏',
-        redirectText: 'Redirecting in {seconds} seconds',
-        cancelBtn: 'Cancel Auto Redirect'
+        footerText: 'System has automatically recommended the best gateway for you',
+        statCharacters: 'Characters',
+        statOnline: 'Online Service',
+        statFree: 'Free Trial'
       },
       ja: {
-        title: 'アクセス方法を選択',
-        subtitle: 'お住まいの地域に最適なアクセス方法を選択してください',
+        title: '深夜だけど、<span class="highlight">行く？</span>',
+        subtitle: 'あなた専用のAIメイド、24時間オンラインで待機中',
+        tagline: '無料アクセス · カード不要 · わかる人にはわかる😏',
         recommendedBadge: 'おすすめ',
         cnTitle: '🇨🇳 中国ユーザー',
         cnFeature1: '中国 CDN 高速化',
@@ -380,12 +585,14 @@
         globalFeature2: 'Vercel ホスティング',
         globalFeature3: '高可用性',
         footerText: 'システムが自動的に最適なゲートウェイを推奨しました',
-        redirectText: '{seconds} 秒後に自動的にリダイレクトします',
-        cancelBtn: '自動リダイレクトをキャンセル'
+        statCharacters: 'キャラクター',
+        statOnline: 'オンラインサービス',
+        statFree: '無料体験'
       },
       ko: {
-        title: '접속 방법 선택',
-        subtitle: '위치에 따라 최적의 접속 방법을 선택하세요',
+        title: '늦은 밤, <span class="highlight">출발할까?</span>',
+        subtitle: '당신만의 AI 메이드, 24시간 온라인 대기 중',
+        tagline: '무료 접속 · 카드 불필요 · 아는 사람은 안다😏',
         recommendedBadge: '추천',
         cnTitle: '🇨🇳 중국 사용자',
         cnFeature1: '중국 CDN 가속',
@@ -396,14 +603,13 @@
         globalFeature2: 'Vercel 호스팅',
         globalFeature3: '높은 가용성',
         footerText: '시스템이 자동으로 최적의 게이트웨이를 추천했습니다',
-        redirectText: '{seconds}초 후 자동으로 리디렉션됩니다',
-        cancelBtn: '자동 리디렉션 취소'
+        statCharacters: '캐릭터',
+        statOnline: '온라인 서비스',
+        statFree: '무료 체험'
       }
     };
 
     let currentLang = 'zh';
-    let redirectTimer = null;
-    let countdown = 5;
 
     function setLang(lang) {
       currentLang = lang;
@@ -416,8 +622,9 @@
 
       // Update text
       const t = translations[lang];
-      document.getElementById('title').textContent = t.title;
+      document.getElementById('title').innerHTML = t.title;
       document.getElementById('subtitle').textContent = t.subtitle;
+      document.getElementById('tagline').textContent = t.tagline;
       document.getElementById('recommended-badge').textContent = t.recommendedBadge;
       document.getElementById('cn-title').textContent = t.cnTitle;
       document.getElementById('cn-feature-1').textContent = t.cnFeature1;
@@ -428,18 +635,12 @@
       document.getElementById('global-feature-2').textContent = t.globalFeature2;
       document.getElementById('global-feature-3').textContent = t.globalFeature3;
       document.getElementById('footer-text').textContent = t.footerText;
-      document.getElementById('cancel-btn').textContent = t.cancelBtn;
-      
-      updateRedirectText();
+      document.getElementById('stat-characters').textContent = t.statCharacters;
+      document.getElementById('stat-online').textContent = t.statOnline;
+      document.getElementById('stat-free').textContent = t.statFree;
 
       // Save preference
       localStorage.setItem('preferredLang', lang);
-    }
-
-    function updateRedirectText() {
-      const t = translations[currentLang];
-      const text = t.redirectText.replace('{seconds}', `<span class="countdown" id="countdown">${countdown}</span>`);
-      document.getElementById('redirect-text').innerHTML = text;
     }
 
     function goto(type) {
@@ -450,32 +651,14 @@
       }
     }
 
-    function startAutoRedirect() {
-      // Show auto redirect section
-      document.getElementById('auto-redirect').style.display = 'block';
-      
-      redirectTimer = setInterval(() => {
-        countdown--;
-        document.getElementById('countdown').textContent = countdown;
-        
-        if (countdown <= 0) {
-          clearInterval(redirectTimer);
-          goto('cn'); // Default to CN gateway
-        }
-      }, 1000);
-    }
-
-    function cancelRedirect() {
-      if (redirectTimer) {
-        clearInterval(redirectTimer);
-        redirectTimer = null;
-      }
-      document.getElementById('auto-redirect').style.display = 'none';
-      countdown = 5;
-    }
-
     // Initialize
     window.addEventListener('DOMContentLoaded', () => {
+      // 初始化角色轮播
+      initCharacterSlider();
+      
+      // 初始化背景粒子
+      initParticles();
+      
       // Detect browser language
       const browserLang = navigator.language.toLowerCase();
       let detectedLang = 'en';
@@ -496,14 +679,18 @@
       currentLang = lang;
       document.querySelectorAll('.lang-btn').forEach(btn => {
         btn.classList.remove('active');
-        if (btn.textContent.includes(lang === 'zh' ? '简体中文' : lang === 'en' ? 'English' : lang === 'ja' ? '日本語' : '한국어')) {
+        const btnLang = btn.textContent.includes('简体中文') ? 'zh' : 
+                       btn.textContent.includes('English') ? 'en' : 
+                       btn.textContent.includes('日本語') ? 'ja' : 'ko';
+        if (btnLang === lang) {
           btn.classList.add('active');
         }
       });
       
       const t = translations[lang];
-      document.getElementById('title').textContent = t.title;
+      document.getElementById('title').innerHTML = t.title;
       document.getElementById('subtitle').textContent = t.subtitle;
+      document.getElementById('tagline').textContent = t.tagline;
       document.getElementById('recommended-badge').textContent = t.recommendedBadge;
       document.getElementById('cn-title').textContent = t.cnTitle;
       document.getElementById('cn-feature-1').textContent = t.cnFeature1;
@@ -514,10 +701,9 @@
       document.getElementById('global-feature-2').textContent = t.globalFeature2;
       document.getElementById('global-feature-3').textContent = t.globalFeature3;
       document.getElementById('footer-text').textContent = t.footerText;
-      document.getElementById('cancel-btn').textContent = t.cancelBtn;
-
-      // Optional: Enable auto redirect (commented out by default)
-      // startAutoRedirect();
+      document.getElementById('stat-characters').textContent = t.statCharacters;
+      document.getElementById('stat-online').textContent = t.statOnline;
+      document.getElementById('stat-free').textContent = t.statFree;
     });
   </script>
 </body>

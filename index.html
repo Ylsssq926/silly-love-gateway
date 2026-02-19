@@ -342,6 +342,34 @@
       border-top: 1px solid #e0e0e0;
     }
 
+    .disclaimer {
+      display: flex;
+      gap: 12px;
+      padding: 16px;
+      background: rgba(255, 193, 7, 0.1);
+      border: 1px solid rgba(255, 193, 7, 0.3);
+      border-radius: 12px;
+      margin-bottom: 20px;
+      text-align: left;
+    }
+
+    .disclaimer-icon {
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    .disclaimer-text {
+      font-size: 13px;
+      color: #666;
+      line-height: 1.6;
+    }
+
+    .disclaimer-text strong {
+      color: #333;
+      display: block;
+      margin-bottom: 4px;
+    }
+
     .footer-text {
       color: #999;
       font-size: 14px;
@@ -479,6 +507,13 @@
     </div>
 
     <div class="footer">
+      <div class="disclaimer">
+        <div class="disclaimer-icon">ℹ️</div>
+        <div class="disclaimer-text">
+          <strong id="disclaimer-title">重要说明：</strong>
+          <span id="disclaimer-content">此推荐仅为技术优化，提供更快的访问速度。所有域名提供完全相同的内容和功能，无任何审查或限制。您可以自由选择任何域名访问。</span>
+        </div>
+      </div>
       <div class="footer-text">
         <span>💡</span>
         <span id="footer-text">系统已根据您的位置自动推荐最佳入口</span>
@@ -552,7 +587,9 @@
         footerText: '系统已根据您的位置自动推荐最佳入口',
         statCharacters: '精美角色',
         statOnline: '在线服务',
-        statFree: '免费体验'
+        statFree: '免费体验',
+        disclaimerTitle: '重要说明：',
+        disclaimerContent: '此推荐仅为技术优化，提供更快的访问速度。所有域名提供完全相同的内容和功能，无任何审查或限制。您可以自由选择任何域名访问。'
       },
       en: {
         title: 'Late Night, <span class="highlight">Ready to Go?</span>',
@@ -570,7 +607,9 @@
         footerText: 'System has automatically recommended the best gateway for you',
         statCharacters: 'Characters',
         statOnline: 'Online Service',
-        statFree: 'Free Trial'
+        statFree: 'Free Trial',
+        disclaimerTitle: 'Important Notice:',
+        disclaimerContent: 'This recommendation is for technical optimization only, providing faster access speed. All domains provide exactly the same content and features, without any censorship or restrictions. You are free to choose any domain to access.'
       },
       ja: {
         title: '深夜だけど、<span class="highlight">行く？</span>',
@@ -588,7 +627,9 @@
         footerText: 'システムが自動的に最適なゲートウェイを推奨しました',
         statCharacters: 'キャラクター',
         statOnline: 'オンラインサービス',
-        statFree: '無料体験'
+        statFree: '無料体験',
+        disclaimerTitle: '重要なお知らせ：',
+        disclaimerContent: 'この推奨は技術的な最適化のみを目的としており、より高速なアクセスを提供します。すべてのドメインは完全に同じコンテンツと機能を提供し、検閲や制限は一切ありません。どのドメインでも自由にアクセスできます。'
       },
       ko: {
         title: '늦은 밤, <span class="highlight">출발할까?</span>',
@@ -606,7 +647,9 @@
         footerText: '시스템이 자동으로 최적의 게이트웨이를 추천했습니다',
         statCharacters: '캐릭터',
         statOnline: '온라인 서비스',
-        statFree: '무료 체험'
+        statFree: '무료 체험',
+        disclaimerTitle: '중요 공지:',
+        disclaimerContent: '이 추천은 기술적 최적화만을 위한 것이며, 더 빠른 액세스 속도를 제공합니다. 모든 도메인은 완전히 동일한 콘텐츠와 기능을 제공하며, 검열이나 제한이 전혀 없습니다. 어떤 도메인이든 자유롭게 선택하여 액세스할 수 있습니다.'
       }
     };
 
@@ -639,6 +682,8 @@
       document.getElementById('stat-characters').textContent = t.statCharacters;
       document.getElementById('stat-online').textContent = t.statOnline;
       document.getElementById('stat-free').textContent = t.statFree;
+      document.getElementById('disclaimer-title').textContent = t.disclaimerTitle;
+      document.getElementById('disclaimer-content').textContent = t.disclaimerContent;
 
       // Save preference
       localStorage.setItem('preferredLang', lang);
@@ -792,6 +837,8 @@
       document.getElementById('stat-characters').textContent = t.statCharacters;
       document.getElementById('stat-online').textContent = t.statOnline;
       document.getElementById('stat-free').textContent = t.statFree;
+      document.getElementById('disclaimer-title').textContent = t.disclaimerTitle;
+      document.getElementById('disclaimer-content').textContent = t.disclaimerContent;
     });
   </script>
 </body>

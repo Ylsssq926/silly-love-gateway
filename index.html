@@ -26,829 +26,484 @@
   <!-- Favicon -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💕</text></svg>">
   
-  <!-- Preconnect for performance -->
+  <!-- Preconnect -->
   <link rel="preconnect" href="https://sillylove.indevs.in">
-  <link rel="preconnect" href="https://sillylove.vercel.app">
-  
+
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans SC', sans-serif;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-      position: relative;
-      overflow-x: hidden;
-      overflow-y: auto;
+      -webkit-font-smoothing: antialiased;
     }
 
-    /* 背景动画粒子 */
-    .particles {
+    .page {
+      min-height: 100vh;
+      min-height: 100dvh;
+      background: #0a0a0f;
+      color: #fff;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* ===== 背景光球 ===== */
+    .bg-orb {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      border-radius: 50%;
+      filter: blur(120px);
       pointer-events: none;
       z-index: 0;
     }
-
-    .particle {
-      position: absolute;
-      width: 4px;
-      height: 4px;
-      background: rgba(255, 255, 255, 0.5);
-      border-radius: 50%;
-      animation: float 15s infinite;
+    .bg-orb--1 {
+      width: 600px; height: 600px;
+      background: rgba(168, 85, 247, 0.15);
+      top: -200px; left: -200px;
+      animation: float1 20s ease-in-out infinite;
+    }
+    .bg-orb--2 {
+      width: 500px; height: 500px;
+      background: rgba(236, 72, 153, 0.12);
+      bottom: -150px; right: -150px;
+      animation: float2 25s ease-in-out infinite;
+    }
+    .bg-orb--3 {
+      width: 400px; height: 400px;
+      background: rgba(139, 92, 246, 0.1);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      animation: float3 30s ease-in-out infinite;
     }
 
-    @keyframes float {
-      0%, 100% { transform: translateY(0) translateX(0); opacity: 0; }
-      10% { opacity: 1; }
-      90% { opacity: 1; }
-      100% { transform: translateY(-100vh) translateX(100px); opacity: 0; }
+    @keyframes float1 {
+      0%, 100% { transform: translate(0, 0); }
+      50% { transform: translate(80px, 60px); }
+    }
+    @keyframes float2 {
+      0%, 100% { transform: translate(0, 0); }
+      50% { transform: translate(-60px, -80px); }
+    }
+    @keyframes float3 {
+      0%, 100% { transform: translate(-50%, -50%) scale(1); }
+      50% { transform: translate(-50%, -50%) scale(1.2); }
     }
 
-    .container {
-      background: rgba(255, 255, 255, 0.98);
-      backdrop-filter: blur(10px);
-      border-radius: 24px;
-      padding: 48px 40px;
-      max-width: 700px;
-      width: 100%;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-      animation: fadeIn 0.5s ease-out;
-      position: relative;
-      z-index: 1;
-    }
-
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .header {
+    /* ===== Hero ===== */
+    .hero {
+      position: relative; z-index: 1;
+      padding: 80px 24px 40px;
       text-align: center;
-      margin-bottom: 32px;
     }
+    .hero__content { max-width: 600px; margin: 0 auto; }
 
-    .logo {
-      font-size: 64px;
-      margin-bottom: 16px;
-      animation: pulse 2s ease-in-out infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.1); }
-    }
-
-    h1 {
-      font-size: 32px;
-      color: #1a1a1a;
-      margin-bottom: 12px;
-      font-weight: 700;
-      line-height: 1.3;
-    }
-
-    .highlight {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+    .hero__title {
+      font-size: 3.5rem; font-weight: 800;
+      background: linear-gradient(135deg, #ec4899, #a855f7, #6366f1);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
       background-clip: text;
+      margin-bottom: 16px; letter-spacing: -0.02em;
     }
-
-    .subtitle {
-      color: #666;
-      font-size: 16px;
-      line-height: 1.6;
+    .hero__tagline {
+      font-size: 1.5rem; font-weight: 600;
+      color: rgba(255,255,255,0.9);
       margin-bottom: 8px;
     }
-
-    .tagline {
-      color: #999;
-      font-size: 14px;
-      font-style: italic;
+    .hero__subtitle {
+      font-size: 1rem;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 32px; letter-spacing: 0.05em;
+    }
+    .hero__buttons {
+      display: flex; gap: 16px;
+      justify-content: center; flex-wrap: wrap;
     }
 
-    /* 角色轮播 */
-    .character-showcase {
-      margin: 24px 0;
-      height: 200px;
-      position: relative;
-      overflow: hidden;
-      border-radius: 16px;
-      background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+    .btn-primary {
+      padding: 14px 36px; font-size: 1.1rem; font-weight: 700;
+      color: #fff;
+      background: linear-gradient(135deg, #ec4899, #a855f7);
+      border: none; border-radius: 50px; cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 24px rgba(168,85,247,0.4);
+      text-decoration: none; display: inline-block;
     }
-
-    .character-slider {
-      display: flex;
-      animation: slide 20s linear infinite;
-      height: 100%;
-    }
-
-    @keyframes slide {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
-    }
-
-    .character-card {
-      min-width: 150px;
-      height: 200px;
-      margin: 0 8px;
-      border-radius: 12px;
-      overflow: hidden;
-      position: relative;
-      transition: transform 0.3s;
-    }
-
-    .character-card:hover {
-      transform: scale(1.05);
-      z-index: 10;
-    }
-
-    .character-card img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .character-name {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
-      color: white;
-      padding: 8px;
-      font-size: 12px;
-      text-align: center;
-    }
-
-    .lang-switcher {
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-      margin-bottom: 32px;
-      flex-wrap: wrap;
-    }
-
-    .lang-btn {
-      padding: 8px 16px;
-      border: 2px solid #e0e0e0;
-      border-radius: 20px;
-      background: white;
-      cursor: pointer;
-      font-size: 14px;
-      transition: all 0.3s;
-      color: #666;
-    }
-
-    .lang-btn:hover {
-      border-color: #667eea;
-      color: #667eea;
+    .btn-primary:hover {
       transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(168,85,247,0.6);
     }
 
-    .lang-btn.active {
-      border-color: #667eea;
-      background: #667eea;
-      color: white;
+    .btn-cdn {
+      padding: 14px 36px; font-size: 1.1rem; font-weight: 600;
+      color: rgba(255,255,255,0.8);
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 50px; cursor: pointer;
+      transition: background-color 0.2s, border-color 0.2s;
+      backdrop-filter: blur(8px);
+      text-decoration: none; display: inline-block;
+    }
+    .btn-cdn:hover {
+      background: rgba(255,255,255,0.15);
+      border-color: rgba(255,255,255,0.3);
     }
 
-    .option {
-      border: 3px solid #e0e0e0;
-      border-radius: 16px;
-      padding: 24px;
-      margin: 20px 0;
-      cursor: pointer;
-      transition: all 0.3s;
+    /* ===== Showcase ===== */
+    .showcase {
+      position: relative; z-index: 1;
+      padding: 40px 24px 60px;
+      max-width: 1200px; margin: 0 auto;
+    }
+    .showcase__title {
+      font-size: 1.8rem; font-weight: 700;
+      text-align: center;
+      background: linear-gradient(135deg, #f472b6, #c084fc);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 8px;
+    }
+    .showcase__subtitle {
+      text-align: center;
+      color: rgba(255,255,255,0.4);
+      font-size: 0.9rem; margin-bottom: 32px;
+    }
+
+    /* Chips */
+    .chips {
+      display: flex; gap: 12px;
+      overflow-x: auto; padding: 4px 0 16px;
+      justify-content: center; flex-wrap: wrap;
+      scrollbar-width: none;
+    }
+    .chips::-webkit-scrollbar { display: none; }
+
+    .chip {
+      display: flex; align-items: center; gap: 8px;
+      padding: 10px 20px; font-size: 0.95rem; font-weight: 600;
+      color: rgba(255,255,255,0.7);
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 50px; cursor: pointer;
+      transition: background-color 0.2s, border-color 0.2s, color 0.2s, box-shadow 0.2s;
+      white-space: nowrap; flex-shrink: 0;
+      font-family: inherit;
+    }
+    .chip:hover {
+      background: rgba(255,255,255,0.1);
+      border-color: rgba(255,255,255,0.2);
+      color: #fff;
+    }
+    .chip--active {
+      background: rgba(168,85,247,0.2);
+      border-color: rgba(168,85,247,0.5);
+      color: #fff;
+      box-shadow: 0 0 20px rgba(168,85,247,0.3);
+    }
+    .chip__icon { font-size: 1.2rem; }
+
+    /* Image Grid */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px; margin-top: 24px;
+      animation: fadeIn 0.4s ease;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .card {
+      border-radius: 16px; overflow: hidden;
       position: relative;
-      overflow: hidden;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      transition: transform 0.3s, box-shadow 0.3s;
     }
-
-    .option::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
-      opacity: 0;
-      transition: opacity 0.3s;
-    }
-
-    .option:hover {
-      border-color: #667eea;
+    .card:hover {
       transform: translateY(-4px);
-      box-shadow: 0 8px 24px rgba(102, 126, 234, 0.2);
+      box-shadow: 0 12px 40px rgba(168,85,247,0.2);
+    }
+    .card__wrap {
+      aspect-ratio: 3 / 4;
+      position: relative; overflow: hidden;
+    }
+    .card__img {
+      width: 100%; height: 100%;
+      object-fit: cover; opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+    .card__img--loaded { opacity: 1; }
+    .card__placeholder {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      background: linear-gradient(135deg, rgba(168,85,247,0.1), rgba(236,72,153,0.1));
+    }
+    .card__placeholder-icon { font-size: 3rem; opacity: 0.3; }
+
+    /* View More */
+    .card-more {
+      border-radius: 16px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 12px;
+      background: linear-gradient(135deg, rgba(168,85,247,0.15), rgba(236,72,153,0.15));
+      border: 1px dashed rgba(168,85,247,0.4);
+      cursor: pointer;
+      transition: background-color 0.3s, border-color 0.3s;
+      min-height: 200px; aspect-ratio: 3 / 4;
+      text-decoration: none;
+    }
+    .card-more:hover {
+      background: linear-gradient(135deg, rgba(168,85,247,0.25), rgba(236,72,153,0.25));
+      border-color: rgba(168,85,247,0.6);
+    }
+    .card-more__text {
+      font-size: 1rem; font-weight: 600;
+      color: rgba(255,255,255,0.8);
+      text-align: center; padding: 0 12px;
+    }
+    .card-more__arrow {
+      font-size: 1.5rem; color: #a855f7;
+      animation: bounce 2s ease-in-out infinite;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateX(0); }
+      50% { transform: translateX(6px); }
     }
 
-    .option:hover::before {
-      opacity: 1;
-    }
-
-    .option.recommended {
-      border-color: #667eea;
-      background: linear-gradient(135deg, rgba(102, 126, 234, 0.08) 0%, rgba(118, 75, 162, 0.08) 100%);
-    }
-
-    .option-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 12px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .option-title {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .option-title h3 {
-      font-size: 20px;
-      color: #1a1a1a;
-      font-weight: 600;
-    }
-
-    .badge {
-      background: #667eea;
-      color: white;
-      padding: 4px 12px;
-      border-radius: 12px;
-      font-size: 12px;
-      font-weight: 600;
-      animation: glow 2s ease-in-out infinite;
-    }
-
-    @keyframes glow {
-      0%, 100% { box-shadow: 0 0 5px rgba(102, 126, 234, 0.5); }
-      50% { box-shadow: 0 0 20px rgba(102, 126, 234, 0.8); }
-    }
-
-    .option-url {
-      color: #667eea;
-      font-size: 16px;
-      font-weight: 500;
-      margin-bottom: 12px;
-      word-break: break-all;
-      position: relative;
-      z-index: 1;
-    }
-
-    .option-features {
-      display: flex;
-      gap: 16px;
-      flex-wrap: wrap;
-      position: relative;
-      z-index: 1;
-    }
-
-    .feature {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      color: #666;
-      font-size: 14px;
-    }
-
-    .feature::before {
-      content: '✓';
-      color: #667eea;
-      font-weight: bold;
-    }
-
+    /* ===== Footer ===== */
     .footer {
-      text-align: center;
-      margin-top: 32px;
-      padding-top: 24px;
-      border-top: 1px solid #e0e0e0;
+      position: relative; z-index: 1;
+      text-align: center; padding: 24px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .footer__age {
+      font-size: 0.85rem;
+      color: rgba(255,193,7,0.8);
+      margin-bottom: 8px;
+    }
+    .footer__disclaimer {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.5);
     }
 
-    .disclaimer {
-      display: flex;
-      gap: 12px;
-      padding: 16px;
-      background: rgba(255, 193, 7, 0.1);
-      border: 1px solid rgba(255, 193, 7, 0.3);
-      border-radius: 12px;
-      margin-bottom: 20px;
-      text-align: left;
+    /* Hidden */
+    .hidden { display: none; }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 768px) {
+      .hero { padding: 60px 20px 32px; }
+      .hero__title { font-size: 2.5rem; }
+      .hero__tagline { font-size: 1.2rem; }
+      .hero__buttons { flex-direction: column; align-items: center; }
+      .btn-primary, .btn-cdn { width: 100%; max-width: 300px; text-align: center; }
+      .grid { grid-template-columns: repeat(3, 1fr); gap: 10px; }
+      .chips { justify-content: flex-start; flex-wrap: nowrap; padding: 4px 0 12px; }
     }
-
-    .disclaimer-icon {
-      font-size: 20px;
-      flex-shrink: 0;
-    }
-
-    .disclaimer-text {
-      font-size: 13px;
-      color: #666;
-      line-height: 1.6;
-    }
-
-    .disclaimer-text strong {
-      color: #333;
-      display: block;
-      margin-bottom: 4px;
-    }
-
-    .footer-text {
-      color: #999;
-      font-size: 14px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .stats {
-      display: flex;
-      justify-content: center;
-      gap: 24px;
-      margin: 24px 0;
-      flex-wrap: wrap;
-    }
-
-    .stat-item {
-      text-align: center;
-    }
-
-    .stat-number {
-      font-size: 24px;
-      font-weight: 700;
-      color: #667eea;
-    }
-
-    .stat-label {
-      font-size: 12px;
-      color: #999;
-      margin-top: 4px;
-    }
-
-    @media (max-width: 640px) {
-      .container {
-        padding: 32px 24px;
-      }
-
-      h1 {
-        font-size: 24px;
-      }
-
-      .logo {
-        font-size: 48px;
-      }
-
-      .option {
-        padding: 20px;
-      }
-
-      .option-title h3 {
-        font-size: 18px;
-      }
-
-      .option-url {
-        font-size: 14px;
-      }
-
-      .character-card {
-        min-width: 120px;
-        height: 160px;
-      }
+    @media (max-width: 480px) {
+      .hero__title { font-size: 2rem; }
+      .hero__tagline { font-size: 1rem; }
+      .grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+      .chip { padding: 8px 14px; font-size: 0.85rem; }
+      .showcase__title { font-size: 1.4rem; }
     }
   </style>
 </head>
 <body>
-  <!-- 背景粒子 -->
-  <div class="particles" id="particles"></div>
+  <div class="page">
+    <!-- 背景光球 -->
+    <div class="bg-orb bg-orb--1"></div>
+    <div class="bg-orb bg-orb--2"></div>
+    <div class="bg-orb bg-orb--3"></div>
 
-  <div class="container">
-    <div class="header">
-      <div class="logo">🚗💕</div>
-      <h1 id="title">深夜了，<span class="highlight">发车吗？</span></h1>
-      <p class="subtitle" id="subtitle">200+二次元肉奴等你调教，想玩谁玩谁🔥</p>
-      <p class="tagline" id="tagline">无审查NSFW · 免费上车 · 老司机都懂😏</p>
-    </div>
-
-    <!-- 数据统计 -->
-    <div class="stats">
-      <div class="stat-item">
-        <div class="stat-number">200+</div>
-        <div class="stat-label" id="stat-characters">精美角色</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-number">24/7</div>
-        <div class="stat-label" id="stat-online">在线服务</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-number">100%</div>
-        <div class="stat-label" id="stat-free">免费体验</div>
-      </div>
-    </div>
-
-    <!-- 角色轮播 -->
-    <div class="character-showcase">
-      <div class="character-slider" id="characterSlider"></div>
-    </div>
-
-    <div class="lang-switcher">
-      <button class="lang-btn active" onclick="setLang('zh')">简体中文</button>
-      <button class="lang-btn" onclick="setLang('en')">English</button>
-      <button class="lang-btn" onclick="setLang('ja')">日本語</button>
-      <button class="lang-btn" onclick="setLang('ko')">한국어</button>
-    </div>
-
-    <div class="option" id="cn-option" onclick="goto('cn')">
-      <div class="option-header">
-        <div class="option-title">
-          <h3 id="cn-title">🇨🇳 国内用户</h3>
-        </div>
-        <span class="badge" id="cn-badge" style="display: none;">推荐</span>
-      </div>
-      <div class="option-url">sillylove.indevs.in</div>
-      <div class="option-features">
-        <span class="feature" id="cn-feature-1">国内 CDN 加速</span>
-        <span class="feature" id="cn-feature-2">访问速度快</span>
-        <span class="feature" id="cn-feature-3">稳定可靠</span>
-      </div>
-    </div>
-
-    <div class="option" id="global-option" onclick="goto('global')">
-      <div class="option-header">
-        <div class="option-title">
-          <h3 id="global-title">🌍 海外用户</h3>
-        </div>
-        <span class="badge" id="global-badge" style="display: none;">推荐</span>
-      </div>
-      <div class="option-url">sillylove.vercel.app</div>
-      <div class="option-features">
-        <span class="feature" id="global-feature-1">全球 CDN 加速</span>
-        <span class="feature" id="global-feature-2">Vercel 托管</span>
-        <span class="feature" id="global-feature-3">高可用性</span>
-      </div>
-    </div>
-
-    <div class="footer">
-      <div class="disclaimer">
-        <div class="disclaimer-icon">ℹ️</div>
-        <div class="disclaimer-text">
-          <strong id="disclaimer-title">重要说明：</strong>
-          <span id="disclaimer-content">此推荐仅为技术优化，提供更快的访问速度。所有域名提供完全相同的内容和功能，无任何审查或限制。您可以自由选择任何域名访问。</span>
+    <!-- Hero -->
+    <header class="hero">
+      <div class="hero__content">
+        <h1 class="hero__title">Silly Love</h1>
+        <p class="hero__tagline" id="tagline"></p>
+        <p class="hero__subtitle" id="subtitle"></p>
+        <div class="hero__buttons">
+          <a class="btn-primary" id="btnEnter" href="https://sillylove.indevs.in"></a>
+          <a class="btn-cdn" id="btnCdn" href="https://sillylove.indevs.in"></a>
         </div>
       </div>
-      <div class="footer-text">
-        <span>💡</span>
-        <span id="footer-text">系统已根据您的位置自动推荐最佳入口</span>
-      </div>
-    </div>
+    </header>
+
+    <!-- 分类展示区 -->
+    <section class="showcase">
+      <h2 class="showcase__title" id="exploreTitle"></h2>
+      <p class="showcase__subtitle" id="exploreSubtitle"></p>
+      <div class="chips" id="chips"></div>
+      <div id="gridContainer"></div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p class="footer__age" id="age18"></p>
+      <p class="footer__disclaimer" id="disclaimer"></p>
+    </footer>
   </div>
 
   <script>
-    // 热门角色列表（使用实际存在的图片）
-    const featuredCharacters = [
-      { id: 'elysia_7d0165', name: '爱莉希雅' },
-      { id: 'kafka_162073', name: '卡芙卡' },
-      { id: 'raiden_0f87cd', name: '雷电将军' },
-      { id: 'aqua_48r0o5', name: 'Aqua' },
-      { id: 'ganyu_1dsiiq', name: '甘雨' },
-      { id: 'makima_3ytqgl', name: '玛奇玛' },
-      { id: 'megumin_4marci', name: '惠惠' },
-      { id: 'darkness_6ljgnk', name: '达克妮斯' },
-      { id: 'frieren_8sdnzo', name: '芙莉莲' },
-      { id: 'bronya_7d2cc5', name: '布洛妮娅' },
-      { id: 'silverwolf_529404', name: '银狼' },
-      { id: 'rebecca_0mi09n', name: '丽贝卡' }
+    /* ===== 分类数据 ===== */
+    var IMG = 'https://sillylove.indevs.in/images/showcase/';
+    var SITE = 'https://sillylove.indevs.in';
+
+    var CATEGORIES = [
+      { id:'3d', icon:'🎮', images:['3d-01','3d-02','3d-03','3d-04','3d-05','3d-06'],
+        zh:'3D 写实', en:'3D Realistic', ja:'3D リアル', ko:'3D 리얼' },
+      { id:'ntr', icon:'🐂', images:['ntr-01','ntr-02','ntr-03','ntr-04'],
+        zh:'NTR', en:'NTR', ja:'NTR', ko:'NTR' },
+      { id:'tifa', icon:'⚔️', images:['tifa-01','tifa-02','tifa-03','tifa-04'],
+        zh:'蒂法', en:'Tifa', ja:'ティファ', ko:'티파' },
+      { id:'chunli', icon:'🥋', images:['chunli-01','chunli-02','chunli-03','chunli-04'],
+        zh:'春丽', en:'Chun-Li', ja:'春麗', ko:'춘리' },
+      { id:'bdsm', icon:'⛓️', images:['bdsm-01','bdsm-02','bdsm-03','bdsm-04'],
+        zh:'BDSM', en:'BDSM', ja:'BDSM', ko:'BDSM' },
+      { id:'yandere', icon:'🔪', images:['yandere-01','yandere-02','yandere-03','yandere-04'],
+        zh:'病娇', en:'Yandere', ja:'ヤンデレ', ko:'얀데레' },
+      { id:'monster', icon:'🐙', images:['monster-01','monster-02','monster-03','monster-04'],
+        zh:'异种/触手', en:'Monster', ja:'異種/触手', ko:'이종/촉수' },
+      { id:'dominant', icon:'👑', images:['dominant-01','dominant-02','dominant-03','dominant-04'],
+        zh:'女王/调教', en:'Dominant', ja:'女王/調教', ko:'여왕/조교' }
     ];
 
-    // 初始化角色轮播
-    function initCharacterSlider() {
-      const slider = document.getElementById('characterSlider');
-      const baseUrl = 'https://sillylove.indevs.in/characters/';
-      
-      // 复制两遍以实现无缝循环
-      const characters = [...featuredCharacters, ...featuredCharacters];
-      
-      characters.forEach(char => {
-        const card = document.createElement('div');
-        card.className = 'character-card';
-        card.innerHTML = `
-          <img src="${baseUrl}${char.id}.webp" alt="${char.name}" loading="lazy">
-          <div class="character-name">${char.name}</div>
-        `;
-        slider.appendChild(card);
-      });
-    }
-
-    // 初始化背景粒子
-    function initParticles() {
-      const particles = document.getElementById('particles');
-      for (let i = 0; i < 30; i++) {
-        const particle = document.createElement('div');
-        particle.className = 'particle';
-        particle.style.left = Math.random() * 100 + '%';
-        particle.style.animationDelay = Math.random() * 15 + 's';
-        particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
-        particles.appendChild(particle);
-      }
-    }
-
-    const translations = {
+    /* ===== 文案 ===== */
+    var T = {
       zh: {
-        title: '深夜了，<span class="highlight">发车吗？</span>',
-        subtitle: '200+二次元肉奴等你调教，想玩谁玩谁🔥',
-        tagline: '无审查NSFW · 免费上车 · 老司机都懂😏',
-        recommendedBadge: '推荐',
-        cnTitle: '🇨🇳 国内用户',
-        cnFeature1: '国内 CDN 加速',
-        cnFeature2: '访问速度快',
-        cnFeature3: '稳定可靠',
-        globalTitle: '🌍 海外用户',
-        globalFeature1: '全球 CDN 加速',
-        globalFeature2: 'Vercel 托管',
-        globalFeature3: '高可用性',
-        footerText: '系统已根据您的位置自动推荐最佳入口',
-        statCharacters: '精美角色',
-        statOnline: '在线服务',
-        statFree: '免费体验',
-        disclaimerTitle: '重要说明：',
-        disclaimerContent: '此推荐仅为技术优化，提供更快的访问速度。所有域名提供完全相同的内容和功能，无任何审查或限制。您可以自由选择任何域名访问。'
+        tagline:'今晚想被谁压在身下？',
+        subtitle:'AI 角色扮演 · 无底线 · 满足你最深处的渴望',
+        enterSite:'现在就要 ta',
+        enterCDN:'🚀 极速进入',
+        exploreTitle:'挑一个，今晚 ta 是你的',
+        exploreSubtitle:'先看看...忍得住算你赢',
+        viewMore:'里面更刺激...',
+        disclaimer:'所有域名提供完全相同的内容，无审查无限制',
+        age18:'⚠️ 仅限 18 岁以上成人访问'
       },
       en: {
-        title: 'Late Night, <span class="highlight">Ready to Drive?</span>',
-        subtitle: '200+ anime slaves waiting for you, play with whoever you want🔥',
-        tagline: 'Uncensored NSFW · Free Access · You Know What\'s Up😏',
-        recommendedBadge: 'Recommended',
-        cnTitle: '🇨🇳 China Users',
-        cnFeature1: 'China CDN Acceleration',
-        cnFeature2: 'Fast Access',
-        cnFeature3: 'Stable & Reliable',
-        globalTitle: '🌍 Global Users',
-        globalFeature1: 'Global CDN Acceleration',
-        globalFeature2: 'Vercel Hosting',
-        globalFeature3: 'High Availability',
-        footerText: 'System has automatically recommended the best gateway for you',
-        statCharacters: 'Characters',
-        statOnline: 'Online Service',
-        statFree: 'Free Trial',
-        disclaimerTitle: 'Important Notice:',
-        disclaimerContent: 'This recommendation is for technical optimization only, providing faster access speed. All domains provide exactly the same content and features, without any censorship or restrictions. You are free to choose any domain to access.'
+        tagline:'Who do you want on top tonight?',
+        subtitle:'AI Roleplay · No Limits · Satisfy your deepest cravings',
+        enterSite:'I Want Them Now',
+        enterCDN:'🚀 Fast Entry',
+        exploreTitle:'Pick one. They\'re yours tonight.',
+        exploreSubtitle:'Take a peek... bet you can\'t resist.',
+        viewMore:'It gets wilder inside...',
+        disclaimer:'All domains provide the exact same content, uncensored',
+        age18:'⚠️ Adults 18+ only'
       },
       ja: {
-        title: '深夜だけど、<span class="highlight">行く？</span>',
-        subtitle: '200+二次元奴隷があなたを待ってる、誰とでも遊べる🔥',
-        tagline: '無修正NSFW · 無料アクセス · わかる人にはわかる😏',
-        recommendedBadge: 'おすすめ',
-        cnTitle: '🇨🇳 中国ユーザー',
-        cnFeature1: '中国 CDN 高速化',
-        cnFeature2: '高速アクセス',
-        cnFeature3: '安定性',
-        globalTitle: '🌍 グローバルユーザー',
-        globalFeature1: 'グローバル CDN 高速化',
-        globalFeature2: 'Vercel ホスティング',
-        globalFeature3: '高可用性',
-        footerText: 'システムが自動的に最適なゲートウェイを推奨しました',
-        statCharacters: 'キャラクター',
-        statOnline: 'オンラインサービス',
-        statFree: '無料体験',
-        disclaimerTitle: '重要なお知らせ：',
-        disclaimerContent: 'この推奨は技術的な最適化のみを目的としており、より高速なアクセスを提供します。すべてのドメインは完全に同じコンテンツと機能を提供し、検閲や制限は一切ありません。どのドメインでも自由にアクセスできます。'
+        tagline:'今夜、誰に押し倒されたい？',
+        subtitle:'AI ロールプレイ · 制限なし · あなたの全ての欲望を満たす',
+        enterSite:'今すぐ欲しい',
+        enterCDN:'🚀 高速入口',
+        exploreTitle:'一人選んで、今夜連れて帰ろう',
+        exploreSubtitle:'ちょっと覗いてみて...我慢できる？',
+        viewMore:'中はもっと激しい...',
+        disclaimer:'全てのドメインは同じコンテンツを提供、無検閲',
+        age18:'⚠️ 18歳以上限定'
       },
       ko: {
-        title: '늦은 밤, <span class="highlight">출발할까?</span>',
-        subtitle: '200+ 2차원 노예가 당신을 기다려요, 누구든 플레이🔥',
-        tagline: '무수정 NSFW · 무료 접속 · 아는 사람은 안다😏',
-        recommendedBadge: '추천',
-        cnTitle: '🇨🇳 중국 사용자',
-        cnFeature1: '중국 CDN 가속',
-        cnFeature2: '빠른 접속',
-        cnFeature3: '안정적',
-        globalTitle: '🌍 글로벌 사용자',
-        globalFeature1: '글로벌 CDN 가속',
-        globalFeature2: 'Vercel 호스팅',
-        globalFeature3: '높은 가용성',
-        footerText: '시스템이 자동으로 최적의 게이트웨이를 추천했습니다',
-        statCharacters: '캐릭터',
-        statOnline: '온라인 서비스',
-        statFree: '무료 체험',
-        disclaimerTitle: '중요 공지:',
-        disclaimerContent: '이 추천은 기술적 최적화만을 위한 것이며, 더 빠른 액세스 속도를 제공합니다. 모든 도메인은 완전히 동일한 콘텐츠와 기능을 제공하며, 검열이나 제한이 전혀 없습니다. 어떤 도메인이든 자유롭게 선택하여 액세스할 수 있습니다.'
+        tagline:'오늘 밤, 누구한테 깔리고 싶어?',
+        subtitle:'AI 역할극 · 제한 없음 · 당신의 모든 욕망을 채워줄게',
+        enterSite:'지금 당장 원해',
+        enterCDN:'🚀 고속 입장',
+        exploreTitle:'하나 골라, 오늘 밤 데려가',
+        exploreSubtitle:'살짝 봐봐...참을 수 있어?',
+        viewMore:'안에는 더 자극적인 게...',
+        disclaimer:'모든 도메인은 동일한 콘텐츠 제공, 무검열',
+        age18:'⚠️ 18세 이상만 이용 가능'
       }
     };
 
-    let currentLang = 'zh';
+    /* ===== 语言检测 ===== */
+    function detectLocale() {
+      var lang = navigator.language || '';
+      if (lang.startsWith('zh')) return 'zh';
+      if (lang.startsWith('ja')) return 'ja';
+      if (lang.startsWith('ko')) return 'ko';
+      return 'en';
+    }
 
-    function setLang(lang) {
-      currentLang = lang;
-      
-      // Update active button
-      document.querySelectorAll('.lang-btn').forEach(btn => {
-        btn.classList.remove('active');
-      });
-      event.target.classList.add('active');
+    var locale = detectLocale();
+    var expanded = null;
+    var loadedSet = {};
 
-      // Update text
-      const t = translations[lang];
-      document.getElementById('title').innerHTML = t.title;
-      document.getElementById('subtitle').textContent = t.subtitle;
+    /* ===== 渲染文案 ===== */
+    function applyTexts() {
+      var t = T[locale];
       document.getElementById('tagline').textContent = t.tagline;
-      // Update both badge texts (they may or may not be visible)
-      const cnBadge = document.getElementById('cn-badge');
-      const globalBadge = document.getElementById('global-badge');
-      if (cnBadge) cnBadge.textContent = t.recommendedBadge;
-      if (globalBadge) globalBadge.textContent = t.recommendedBadge;
-      document.getElementById('cn-title').textContent = t.cnTitle;
-      document.getElementById('cn-feature-1').textContent = t.cnFeature1;
-      document.getElementById('cn-feature-2').textContent = t.cnFeature2;
-      document.getElementById('cn-feature-3').textContent = t.cnFeature3;
-      document.getElementById('global-title').textContent = t.globalTitle;
-      document.getElementById('global-feature-1').textContent = t.globalFeature1;
-      document.getElementById('global-feature-2').textContent = t.globalFeature2;
-      document.getElementById('global-feature-3').textContent = t.globalFeature3;
-      document.getElementById('footer-text').textContent = t.footerText;
-      document.getElementById('stat-characters').textContent = t.statCharacters;
-      document.getElementById('stat-online').textContent = t.statOnline;
-      document.getElementById('stat-free').textContent = t.statFree;
-      document.getElementById('disclaimer-title').textContent = t.disclaimerTitle;
-      document.getElementById('disclaimer-content').textContent = t.disclaimerContent;
-
-      // Save preference
-      localStorage.setItem('preferredLang', lang);
-    }
-
-    function goto(type) {
-      if (type === 'cn') {
-        window.location.href = 'https://sillylove.indevs.in';
-      } else {
-        window.location.href = 'https://sillylove.vercel.app';
-      }
-    }
-
-    // 检测用户地理位置并推荐最佳入口
-    async function detectAndRecommend() {
-      try {
-        // 尝试从多个来源获取地理位置信息
-        let country = null;
-        
-        // 方法1: 使用 Cloudflare 的地理位置 API
-        try {
-          const cfResponse = await fetch('https://www.cloudflare.com/cdn-cgi/trace');
-          const cfText = await cfResponse.text();
-          const locMatch = cfText.match(/loc=([A-Z]{2})/);
-          if (locMatch) {
-            country = locMatch[1];
-            console.log('[Gateway] Detected country from Cloudflare:', country);
-          }
-        } catch (e) {
-          console.warn('[Gateway] Cloudflare detection failed:', e);
-        }
-        
-        // 方法2: 使用浏览器语言作为备选
-        if (!country) {
-          const lang = navigator.language.toLowerCase();
-          if (lang.startsWith('zh-cn') || lang === 'zh') {
-            country = 'CN';
-            console.log('[Gateway] Detected country from browser language:', country);
-          }
-        }
-        
-        // 方法3: 使用时区作为备选
-        if (!country) {
-          const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-          if (timezone.includes('Shanghai') || timezone.includes('Chongqing') || 
-              timezone.includes('Hong_Kong') || timezone.includes('Taipei')) {
-            country = 'CN';
-            console.log('[Gateway] Detected country from timezone:', country);
-          }
-        }
-        
-        // 中国大陆及周边地区
-        const chinaRegions = ['CN', 'HK', 'MO', 'TW'];
-        
-        if (country && chinaRegions.includes(country)) {
-          // 推荐国内入口
-          const cnOption = document.getElementById('cn-option');
-          const cnBadge = document.getElementById('cn-badge');
-          const globalOption = document.getElementById('global-option');
-          
-          if (cnOption && cnBadge) {
-            cnOption.classList.add('recommended');
-            cnBadge.style.display = 'inline-block';
-          }
-          if (globalOption) {
-            globalOption.classList.remove('recommended');
-          }
-          
-          console.log('[Gateway] Recommending CN gateway for', country);
-        } else {
-          // 推荐海外入口
-          const cnOption = document.getElementById('cn-option');
-          const globalOption = document.getElementById('global-option');
-          const globalBadge = document.getElementById('global-badge');
-          
-          if (globalOption && globalBadge) {
-            globalOption.classList.add('recommended');
-            globalBadge.style.display = 'inline-block';
-          }
-          if (cnOption) {
-            cnOption.classList.remove('recommended');
-          }
-          
-          console.log('[Gateway] Recommending Global gateway for', country || 'unknown');
-        }
-      } catch (error) {
-        console.error('[Gateway] Detection failed:', error);
-        // 默认推荐国内入口（因为主要用户在国内）
-        const cnOption = document.getElementById('cn-option');
-        const cnBadge = document.getElementById('cn-badge');
-        if (cnOption && cnBadge) {
-          cnOption.classList.add('recommended');
-          cnBadge.style.display = 'inline-block';
-        }
-      }
-    }
-
-    // Initialize
-    window.addEventListener('DOMContentLoaded', () => {
-      // 初始化角色轮播
-      initCharacterSlider();
-      
-      // 初始化背景粒子
-      initParticles();
-      
-      // 检测地理位置并推荐最佳入口
-      detectAndRecommend();
-      
-      // Detect browser language
-      const browserLang = navigator.language.toLowerCase();
-      let detectedLang = 'en';
-      
-      if (browserLang.startsWith('zh')) {
-        detectedLang = 'zh';
-      } else if (browserLang.startsWith('ja')) {
-        detectedLang = 'ja';
-      } else if (browserLang.startsWith('ko')) {
-        detectedLang = 'ko';
-      }
-
-      // Use saved preference or detected language
-      const savedLang = localStorage.getItem('preferredLang');
-      const lang = savedLang || detectedLang;
-      
-      // Set language without triggering event
-      currentLang = lang;
-      document.querySelectorAll('.lang-btn').forEach(btn => {
-        btn.classList.remove('active');
-        const btnLang = btn.textContent.includes('简体中文') ? 'zh' : 
-                       btn.textContent.includes('English') ? 'en' : 
-                       btn.textContent.includes('日本語') ? 'ja' : 'ko';
-        if (btnLang === lang) {
-          btn.classList.add('active');
-        }
-      });
-      
-      const t = translations[lang];
-      document.getElementById('title').innerHTML = t.title;
       document.getElementById('subtitle').textContent = t.subtitle;
-      document.getElementById('tagline').textContent = t.tagline;
-      // Update both badge texts (they may or may not be visible)
-      const cnBadge = document.getElementById('cn-badge');
-      const globalBadge = document.getElementById('global-badge');
-      if (cnBadge) cnBadge.textContent = t.recommendedBadge;
-      if (globalBadge) globalBadge.textContent = t.recommendedBadge;
-      document.getElementById('cn-title').textContent = t.cnTitle;
-      document.getElementById('cn-feature-1').textContent = t.cnFeature1;
-      document.getElementById('cn-feature-2').textContent = t.cnFeature2;
-      document.getElementById('cn-feature-3').textContent = t.cnFeature3;
-      document.getElementById('global-title').textContent = t.globalTitle;
-      document.getElementById('global-feature-1').textContent = t.globalFeature1;
-      document.getElementById('global-feature-2').textContent = t.globalFeature2;
-      document.getElementById('global-feature-3').textContent = t.globalFeature3;
-      document.getElementById('footer-text').textContent = t.footerText;
-      document.getElementById('stat-characters').textContent = t.statCharacters;
-      document.getElementById('stat-online').textContent = t.statOnline;
-      document.getElementById('stat-free').textContent = t.statFree;
-      document.getElementById('disclaimer-title').textContent = t.disclaimerTitle;
-      document.getElementById('disclaimer-content').textContent = t.disclaimerContent;
-    });
+      document.getElementById('btnEnter').textContent = t.enterSite;
+      document.getElementById('btnCdn').textContent = t.enterCDN;
+      document.getElementById('exploreTitle').textContent = t.exploreTitle;
+      document.getElementById('exploreSubtitle').textContent = t.exploreSubtitle;
+      document.getElementById('age18').textContent = t.age18;
+      document.getElementById('disclaimer').textContent = t.disclaimer;
+    }
+
+    /* ===== 渲染 Chips ===== */
+    function renderChips() {
+      var container = document.getElementById('chips');
+      container.innerHTML = '';
+      CATEGORIES.forEach(function(cat) {
+        var btn = document.createElement('button');
+        btn.className = 'chip' + (expanded === cat.id ? ' chip--active' : '');
+        btn.innerHTML = '<span class="chip__icon">' + cat.icon + '</span><span>' + cat[locale] + '</span>';
+        btn.onclick = function() { toggleCategory(cat.id); };
+        container.appendChild(btn);
+      });
+    }
+
+    /* ===== 切换分类 ===== */
+    function toggleCategory(id) {
+      expanded = expanded === id ? null : id;
+      renderChips();
+      renderGrid();
+    }
+
+    /* ===== 渲染图片网格 ===== */
+    function renderGrid() {
+      var container = document.getElementById('gridContainer');
+      if (!expanded) { container.innerHTML = ''; return; }
+
+      var cat = CATEGORIES.filter(function(c) { return c.id === expanded; })[0];
+      if (!cat) { container.innerHTML = ''; return; }
+
+      var t = T[locale];
+      var html = '<div class="grid">';
+
+      cat.images.forEach(function(name, i) {
+        var src = IMG + name + '.webp';
+        var alt = cat[locale] + ' ' + (i + 1);
+        html += '<div class="card"><div class="card__wrap">' +
+          '<img class="card__img' + (loadedSet[src] ? ' card__img--loaded' : '') + '" src="' + src + '" alt="' + alt + '" loading="lazy" ' +
+          'onload="imgLoaded(this)" onerror="imgError(this)">' +
+          (loadedSet[src] ? '' : '<div class="card__placeholder"><span class="card__placeholder-icon">' + cat.icon + '</span></div>') +
+          '</div></div>';
+      });
+
+      html += '<a class="card-more" href="' + SITE + '">' +
+        '<span class="card-more__text">' + t.viewMore + '</span>' +
+        '<span class="card-more__arrow">→</span></a>';
+      html += '</div>';
+
+      container.innerHTML = html;
+    }
+
+    /* ===== 图片加载回调 ===== */
+    function imgLoaded(el) {
+      el.classList.add('card__img--loaded');
+      loadedSet[el.src] = true;
+      var ph = el.parentNode.querySelector('.card__placeholder');
+      if (ph) ph.style.display = 'none';
+    }
+    function imgError(el) {
+      el.style.display = 'none';
+      loadedSet[el.src] = true;
+    }
+
+    /* ===== 初始化 ===== */
+    applyTexts();
+    renderChips();
   </script>
 </body>
 </html>

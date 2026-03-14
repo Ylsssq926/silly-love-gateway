@@ -288,6 +288,26 @@
     /* Hidden */
     .hidden { display: none; }
 
+    /* ===== Language Switcher ===== */
+    .lang-switcher {
+      position: fixed; top: 16px; right: 16px; z-index: 100;
+      display: flex; gap: 4px; background: rgba(0,0,0,0.5);
+      border-radius: 8px; padding: 4px; backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .lang-btn {
+      padding: 6px 12px; border-radius: 6px; border: none;
+      background: transparent; color: rgba(255,255,255,0.6);
+      font-size: 0.8rem; cursor: pointer; transition: background-color 0.2s, color 0.2s;
+    }
+    .lang-btn:hover { background: rgba(255,255,255,0.1); color: #fff; }
+    .lang-btn--active { background: rgba(168,85,247,0.3); color: #fff; }
+
+    .btn-domain-hint {
+      font-size: 0.7rem; color: rgba(255,255,255,0.35); margin-top: 4px;
+    }
+    .btn-wrap { display: flex; flex-direction: column; align-items: center; }
+
     /* ===== Responsive ===== */
     @media (max-width: 768px) {
       .hero { padding: 60px 20px 32px; }
@@ -309,6 +329,14 @@
 </head>
 <body>
   <div class="page">
+    <!-- 语言切换 -->
+    <div class="lang-switcher" id="langSwitcher">
+      <button class="lang-btn" data-lang="zh">中文</button>
+      <button class="lang-btn" data-lang="en">EN</button>
+      <button class="lang-btn" data-lang="ja">日本語</button>
+      <button class="lang-btn" data-lang="ko">한국어</button>
+    </div>
+
     <!-- 背景光球 -->
     <div class="bg-orb bg-orb--1"></div>
     <div class="bg-orb bg-orb--2"></div>
@@ -321,8 +349,14 @@
         <p class="hero__tagline" id="tagline"></p>
         <p class="hero__subtitle" id="subtitle"></p>
         <div class="hero__buttons">
-          <a class="btn-primary" id="btnEnter" href="https://sillylove.indevs.in"></a>
-          <a class="btn-cdn" id="btnCdn" href="https://sillylove.indevs.in"></a>
+          <div class="btn-wrap">
+            <a class="btn-primary" id="btnEnter" href="https://sillylove.indevs.in"></a>
+            <span class="btn-domain-hint">sillylove.indevs.in</span>
+          </div>
+          <div class="btn-wrap">
+            <a class="btn-cdn" id="btnCdn" href="https://sillylove.vercel.app"></a>
+            <span class="btn-domain-hint">sillylove.vercel.app</span>
+          </div>
         </div>
       </div>
     </header>
@@ -371,45 +405,45 @@
       zh: {
         tagline:'今晚想被谁压在身下？',
         subtitle:'AI 角色扮演 · 无底线 · 满足你最深处的渴望',
-        enterSite:'现在就要 ta',
-        enterCDN:'🚀 极速进入',
+        enterSite:'🔥 国内极速线路',
+        enterCDN:'🌐 国际线路',
         exploreTitle:'挑一个，今晚 ta 是你的',
         exploreSubtitle:'先看看...忍得住算你赢',
         viewMore:'里面更刺激...',
-        disclaimer:'所有域名提供完全相同的内容，无审查无限制',
+        disclaimer:'两条线路内容完全相同，国内用户推荐极速线路',
         age18:'⚠️ 仅限 18 岁以上成人访问'
       },
       en: {
         tagline:'Who do you want on top tonight?',
         subtitle:'AI Roleplay · No Limits · Satisfy your deepest cravings',
-        enterSite:'I Want Them Now',
-        enterCDN:'🚀 Fast Entry',
+        enterSite:'🔥 Primary Server',
+        enterCDN:'🌐 Backup Server',
         exploreTitle:'Pick one. They\'re yours tonight.',
         exploreSubtitle:'Take a peek... bet you can\'t resist.',
         viewMore:'It gets wilder inside...',
-        disclaimer:'All domains provide the exact same content, uncensored',
+        disclaimer:'Both servers provide the exact same content, uncensored',
         age18:'⚠️ Adults 18+ only'
       },
       ja: {
         tagline:'今夜、誰に押し倒されたい？',
         subtitle:'AI ロールプレイ · 制限なし · あなたの全ての欲望を満たす',
-        enterSite:'今すぐ欲しい',
-        enterCDN:'🚀 高速入口',
+        enterSite:'🔥 メインサーバー',
+        enterCDN:'🌐 バックアップ',
         exploreTitle:'一人選んで、今夜連れて帰ろう',
         exploreSubtitle:'ちょっと覗いてみて...我慢できる？',
         viewMore:'中はもっと激しい...',
-        disclaimer:'全てのドメインは同じコンテンツを提供、無検閲',
+        disclaimer:'両サーバーは同じコンテンツを提供、無検閲',
         age18:'⚠️ 18歳以上限定'
       },
       ko: {
         tagline:'오늘 밤, 누구한테 깔리고 싶어?',
         subtitle:'AI 역할극 · 제한 없음 · 당신의 모든 욕망을 채워줄게',
-        enterSite:'지금 당장 원해',
-        enterCDN:'🚀 고속 입장',
+        enterSite:'🔥 메인 서버',
+        enterCDN:'🌐 백업 서버',
         exploreTitle:'하나 골라, 오늘 밤 데려가',
         exploreSubtitle:'살짝 봐봐...참을 수 있어?',
         viewMore:'안에는 더 자극적인 게...',
-        disclaimer:'모든 도메인은 동일한 콘텐츠 제공, 무검열',
+        disclaimer:'두 서버 모두 동일한 콘텐츠 제공, 무검열',
         age18:'⚠️ 18세 이상만 이용 가능'
       }
     };
@@ -501,9 +535,28 @@
       loadedSet[el.src] = true;
     }
 
+    /* ===== 语言切换 ===== */
+    function updateLangButtons() {
+      var btns = document.querySelectorAll('.lang-btn');
+      btns.forEach(function(btn) {
+        btn.classList.toggle('lang-btn--active', btn.getAttribute('data-lang') === locale);
+      });
+    }
+
+    document.getElementById('langSwitcher').addEventListener('click', function(e) {
+      var btn = e.target.closest('.lang-btn');
+      if (!btn) return;
+      locale = btn.getAttribute('data-lang');
+      applyTexts();
+      renderChips();
+      if (expanded) renderGrid(expanded);
+      updateLangButtons();
+    });
+
     /* ===== 初始化 ===== */
     applyTexts();
     renderChips();
+    updateLangButtons();
   </script>
 </body>
 </html>

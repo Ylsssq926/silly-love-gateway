@@ -288,6 +288,17 @@
     /* Hidden */
     .hidden { display: none; }
 
+    /* ===== Hero Gallery ===== */
+    .hero-gallery {
+      max-width: 1200px; margin: 0 auto; padding: 0 24px 32px;
+      position: relative; z-index: 1;
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
     /* ===== Language Switcher ===== */
     .lang-switcher {
       position: fixed; top: 16px; right: 16px; z-index: 100;
@@ -316,12 +327,14 @@
       .hero__buttons { flex-direction: column; align-items: center; }
       .btn-primary, .btn-cdn { width: 100%; max-width: 300px; text-align: center; }
       .grid { grid-template-columns: repeat(3, 1fr); gap: 10px; }
+      .hero-grid { grid-template-columns: repeat(4, 1fr); gap: 8px; }
       .chips { justify-content: flex-start; flex-wrap: nowrap; padding: 4px 0 12px; }
     }
     @media (max-width: 480px) {
       .hero__title { font-size: 2rem; }
       .hero__tagline { font-size: 1rem; }
       .grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+      .hero-grid { grid-template-columns: repeat(2, 1fr); gap: 6px; }
       .chip { padding: 8px 14px; font-size: 0.85rem; }
       .showcase__title { font-size: 1.4rem; }
     }
@@ -361,6 +374,44 @@
       </div>
     </header>
 
+    <!-- 首页预览图网格（打开就能看到） -->
+    <section class="hero-gallery">
+      <div class="hero-grid">
+        <div class="card"><div class="card__wrap">
+          <div class="card__placeholder"><span class="card__placeholder-icon">🔥</span></div>
+          <img class="card__img" src="https://sillylove.indevs.in/images/showcase/hero-01.webp" loading="eager" alt="Preview 1" onload="imgLoaded(this)" onerror="imgError(this)">
+        </div></div>
+        <div class="card"><div class="card__wrap">
+          <div class="card__placeholder"><span class="card__placeholder-icon">⚡</span></div>
+          <img class="card__img" src="https://sillylove.indevs.in/images/showcase/hero-02.webp" loading="eager" alt="Preview 2" onload="imgLoaded(this)" onerror="imgError(this)">
+        </div></div>
+        <div class="card"><div class="card__wrap">
+          <div class="card__placeholder"><span class="card__placeholder-icon">🦋</span></div>
+          <img class="card__img" src="https://sillylove.indevs.in/images/showcase/hero-03.webp" loading="eager" alt="Preview 3" onload="imgLoaded(this)" onerror="imgError(this)">
+        </div></div>
+        <div class="card"><div class="card__wrap">
+          <div class="card__placeholder"><span class="card__placeholder-icon">🥋</span></div>
+          <img class="card__img" src="https://sillylove.indevs.in/images/showcase/hero-04.webp" loading="eager" alt="Preview 4" onload="imgLoaded(this)" onerror="imgError(this)">
+        </div></div>
+        <div class="card"><div class="card__wrap">
+          <div class="card__placeholder"><span class="card__placeholder-icon">🎮</span></div>
+          <img class="card__img" src="https://sillylove.indevs.in/images/showcase/hero-05.webp" loading="eager" alt="Preview 5" onload="imgLoaded(this)" onerror="imgError(this)">
+        </div></div>
+        <div class="card"><div class="card__wrap">
+          <div class="card__placeholder"><span class="card__placeholder-icon">🔗</span></div>
+          <img class="card__img" src="https://sillylove.indevs.in/images/showcase/hero-06.webp" loading="eager" alt="Preview 6" onload="imgLoaded(this)" onerror="imgError(this)">
+        </div></div>
+        <div class="card"><div class="card__wrap">
+          <div class="card__placeholder"><span class="card__placeholder-icon">💜</span></div>
+          <img class="card__img" src="https://sillylove.indevs.in/images/showcase/hero-07.webp" loading="eager" alt="Preview 7" onload="imgLoaded(this)" onerror="imgError(this)">
+        </div></div>
+        <div class="card"><div class="card__wrap">
+          <div class="card__placeholder"><span class="card__placeholder-icon">🌙</span></div>
+          <img class="card__img" src="https://sillylove.indevs.in/images/showcase/hero-08.webp" loading="eager" alt="Preview 8" onload="imgLoaded(this)" onerror="imgError(this)">
+        </div></div>
+      </div>
+    </section>
+
     <!-- 分类展示区 -->
     <section class="showcase">
       <h2 class="showcase__title" id="exploreTitle"></h2>
@@ -399,13 +450,7 @@
       { id:'frieren', icon:'✨', images:['frieren-01','frieren-02','frieren-03','frieren-04'],
         zh:'芙莉莲', en:'Frieren', ja:'フリーレン', ko:'프리렌' },
       { id:'hinata', icon:'💜', images:['hinata-01','hinata-02','hinata-03','hinata-04'],
-        zh:'雏田', en:'Hinata', ja:'ヒナタ', ko:'히나타' },
-      { id:'rem', icon:'💙', images:['rem-01','rem-02','rem-03','rem-04'],
-        zh:'蕾姆', en:'Rem', ja:'レム', ko:'렘' },
-      { id:'power', icon:'🩸', images:['power-01','power-02','power-03','power-04'],
-        zh:'帕瓦', en:'Power', ja:'パワー', ko:'파워' },
-      { id:'laracroft', icon:'🏺', images:['laracroft-01','laracroft-02','laracroft-03','laracroft-04'],
-        zh:'劳拉', en:'Lara Croft', ja:'ララ・クロフト', ko:'라라 크로프트' }
+        zh:'雏田', en:'Hinata', ja:'ヒナタ', ko:'히나타' }
     ];
 
     /* ===== 文案 ===== */

@@ -351,11 +351,11 @@
         <div class="hero__buttons">
           <div class="btn-wrap">
             <a class="btn-primary" id="btnEnter" href="https://sillylove.indevs.in"></a>
-            <span class="btn-domain-hint">sillylove.indevs.in</span>
+            <span class="btn-domain-hint" id="hintPrimary"></span>
           </div>
           <div class="btn-wrap">
             <a class="btn-cdn" id="btnCdn" href="https://sillylove.vercel.app"></a>
-            <span class="btn-domain-hint">sillylove.vercel.app</span>
+            <span class="btn-domain-hint" id="hintBackup"></span>
           </div>
         </div>
       </div>
@@ -405,56 +405,67 @@
       zh: {
         tagline:'今晚想被谁压在身下？',
         subtitle:'AI 角色扮演 · 无底线 · 满足你最深处的渴望',
-        enterSite:'🔥 国内极速线路',
-        enterCDN:'🌐 国际线路',
+        enterPrimary:'🔥 极速进入',
+        enterBackup:'🌐 备用线路',
         exploreTitle:'挑一个，今晚 ta 是你的',
         exploreSubtitle:'先看看...忍得住算你赢',
         viewMore:'里面更刺激...',
-        disclaimer:'两条线路内容完全相同，国内用户推荐极速线路',
+        disclaimer:'两条线路内容完全相同，如果一条打不开就试另一条',
         age18:'⚠️ 仅限 18 岁以上成人访问'
       },
       en: {
         tagline:'Who do you want on top tonight?',
         subtitle:'AI Roleplay · No Limits · Satisfy your deepest cravings',
-        enterSite:'🔥 Primary Server',
-        enterCDN:'🌐 Backup Server',
+        enterPrimary:'🔥 Enter Now',
+        enterBackup:'🌐 Backup Server',
         exploreTitle:'Pick one. They\'re yours tonight.',
         exploreSubtitle:'Take a peek... bet you can\'t resist.',
         viewMore:'It gets wilder inside...',
-        disclaimer:'Both servers provide the exact same content, uncensored',
+        disclaimer:'Both servers have the same content. Try the other if one doesn\'t load.',
         age18:'⚠️ Adults 18+ only'
       },
       ja: {
         tagline:'今夜、誰に押し倒されたい？',
         subtitle:'AI ロールプレイ · 制限なし · あなたの全ての欲望を満たす',
-        enterSite:'🔥 メインサーバー',
-        enterCDN:'🌐 バックアップ',
+        enterPrimary:'🔥 今すぐ入る',
+        enterBackup:'🌐 バックアップ',
         exploreTitle:'一人選んで、今夜連れて帰ろう',
         exploreSubtitle:'ちょっと覗いてみて...我慢できる？',
         viewMore:'中はもっと激しい...',
-        disclaimer:'両サーバーは同じコンテンツを提供、無検閲',
+        disclaimer:'両サーバーは同じコンテンツ。片方が開かない場合はもう一方をお試しください。',
         age18:'⚠️ 18歳以上限定'
       },
       ko: {
         tagline:'오늘 밤, 누구한테 깔리고 싶어?',
         subtitle:'AI 역할극 · 제한 없음 · 당신의 모든 욕망을 채워줄게',
-        enterSite:'🔥 메인 서버',
-        enterCDN:'🌐 백업 서버',
+        enterPrimary:'🔥 지금 입장',
+        enterBackup:'🌐 백업 서버',
         exploreTitle:'하나 골라, 오늘 밤 데려가',
         exploreSubtitle:'살짝 봐봐...참을 수 있어?',
         viewMore:'안에는 더 자극적인 게...',
-        disclaimer:'두 서버 모두 동일한 콘텐츠 제공, 무검열',
+        disclaimer:'두 서버 모두 동일한 콘텐츠. 하나가 안 열리면 다른 쪽을 시도하세요.',
         age18:'⚠️ 18세 이상만 이용 가능'
       }
     };
 
-    /* ===== 语言检测 ===== */
+    /* ===== 语言检测 + 地区推荐 ===== */
     function detectLocale() {
       var lang = navigator.language || '';
       if (lang.startsWith('zh')) return 'zh';
       if (lang.startsWith('ja')) return 'ja';
       if (lang.startsWith('ko')) return 'ko';
       return 'en';
+    }
+
+    // 中文用户推荐国内 CDN，其他用户推荐 Vercel 国际线路
+    function getRecommendedUrls() {
+      var isChinese = locale === 'zh';
+      return {
+        primary: isChinese ? 'https://sillylove.indevs.in' : 'https://sillylove.vercel.app',
+        primaryHint: isChinese ? 'sillylove.indevs.in' : 'sillylove.vercel.app',
+        backup: isChinese ? 'https://sillylove.vercel.app' : 'https://sillylove.indevs.in',
+        backupHint: isChinese ? 'sillylove.vercel.app' : 'sillylove.indevs.in'
+      };
     }
 
     var locale = detectLocale();
@@ -464,10 +475,15 @@
     /* ===== 渲染文案 ===== */
     function applyTexts() {
       var t = T[locale];
+      var urls = getRecommendedUrls();
       document.getElementById('tagline').textContent = t.tagline;
       document.getElementById('subtitle').textContent = t.subtitle;
-      document.getElementById('btnEnter').textContent = t.enterSite;
-      document.getElementById('btnCdn').textContent = t.enterCDN;
+      document.getElementById('btnEnter').textContent = t.enterPrimary;
+      document.getElementById('btnEnter').href = urls.primary;
+      document.getElementById('hintPrimary').textContent = urls.primaryHint;
+      document.getElementById('btnCdn').textContent = t.enterBackup;
+      document.getElementById('btnCdn').href = urls.backup;
+      document.getElementById('hintBackup').textContent = urls.backupHint;
       document.getElementById('exploreTitle').textContent = t.exploreTitle;
       document.getElementById('exploreSubtitle').textContent = t.exploreSubtitle;
       document.getElementById('age18').textContent = t.age18;
